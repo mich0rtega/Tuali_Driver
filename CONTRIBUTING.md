@@ -69,23 +69,23 @@ git clone git@github.com:mich0rtega/Tuali_Driver.git
 cd Tuali_Driver
 
 # 2. Instalar dependencias
-npm install
+pnpm install
 
 # 3. Configurar variables de entorno
 cp .env.example .env
 # Editar .env con tus valores locales
 
 # 4. Correr en modo desarrollo
-npm run dev
+pnpm run dev
 ```
 
 ## Comandos útiles
 
 ```bash
-npm run dev      # Servidor con hot-reload
-npm test         # Correr tests
-npm run lint     # Revisar estilo de código
-npm run lint:fix # Autofix de estilo
+pnpm run dev      # Servidor con hot-reload
+pnpm test         # Correr tests
+pnpm run lint     # Revisar estilo de código
+pnpm run lint:fix # Autofix de estilo
 ```
 
 ---

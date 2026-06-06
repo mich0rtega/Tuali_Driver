@@ -14,9 +14,9 @@ API REST para la plataforma Tuali Driver, construida con Node.js y Express.
 ```bash
 git clone git@github.com:mich0rtega/Tuali_Driver.git
 cd Tuali_Driver
-npm install
+pnpm install
 cp .env.example .env   # llenar con tus valores
-npm run dev
+pnpm run dev
 ```
 
 La API queda disponible en `http://localhost:3000`.
@@ -30,10 +30,10 @@ La API queda disponible en `http://localhost:3000`.
 
 | Comando | Descripción |
 |---------|-------------|
-| `npm run dev` | Servidor con hot-reload |
-| `npm start` | Servidor de producción |
-| `npm test` | Tests con cobertura |
-| `npm run lint` | Revisar estilo |
+| `pnpm run dev` | Servidor con hot-reload |
+| `pnpm start` | Servidor de producción |
+| `pnpm test` | Tests con cobertura |
+| `pnpm run lint` | Revisar estilo |
 
 ## Contribuir
 
