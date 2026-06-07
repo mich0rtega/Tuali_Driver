@@ -29,7 +29,13 @@ const crearIncidenteSchema = z.object({
     .nullable(),
 });
  
-const actualizarIncidenteSchema = crearIncidenteSchema.partial();
- 
+const ESTADOS_INCIDENTE = ['Pendiente', 'En Proceso', 'Resuelto'];
+
+const actualizarIncidenteSchema = crearIncidenteSchema.partial().extend({
+  estado: z.enum(ESTADOS_INCIDENTE, {
+    errorMap: () => ({ message: `El estado debe ser uno de: ${ESTADOS_INCIDENTE.join(', ')}.` }),
+  }).optional(),
+});
+
 module.exports = { crearIncidenteSchema, actualizarIncidenteSchema };
  

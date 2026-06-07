@@ -34,6 +34,11 @@ module.exports = (sequelize) =>
         allowNull: false,
         defaultValue: false,
       },
+      estado: {
+        type: DataTypes.STRING(20),
+        allowNull: false,
+        defaultValue: 'pendiente',
+      },
       fecha: {
         type: DataTypes.DATEONLY,
         allowNull: false,

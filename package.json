@@ -10,6 +10,7 @@
     "test": "jest --coverage",
     "lint": "eslint src/**/*.js",
     "lint:fix": "eslint src/**/*.js --fix",
+    "db:seed": "node src/seed.js",
     "db:migrate": "sequelize-cli db:migrate",
     "db:migrate:undo": "sequelize-cli db:migrate:undo",
     "db:migrate:undo:all": "sequelize-cli db:migrate:undo:all"

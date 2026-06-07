@@ -12,4 +12,13 @@ const SustitucionCreateSchema = z.object({
     .regex(/^\d{4}-\d{2}-\d{2}$/, 'La fecha debe tener formato YYYY-MM-DD'),
 });
 
-module.exports = { SustitucionCreateSchema };
+const ESTADOS_SUSTITUCION = ['pendiente', 'notificada', 'aplicada', 'rechazada'];
+
+const SustitucionUpdateSchema = z.object({
+  estado: z.enum(ESTADOS_SUSTITUCION, {
+    errorMap: () => ({ message: `El estado debe ser uno de: ${ESTADOS_SUSTITUCION.join(', ')}.` }),
+  }).optional(),
+  aceptado: z.boolean().optional(),
+});
+
+module.exports = { SustitucionCreateSchema, SustitucionUpdateSchema };

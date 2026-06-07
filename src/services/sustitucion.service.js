@@ -33,6 +33,22 @@ class SustitucionService {
     }
     return sustitucion;
   }
+
+  /**
+   * Actualiza el estado/aceptación de una sustitución (notificar, aplicar, rechazar).
+   * @param {number} id
+   * @param {object} data
+   * @returns {Promise<object>}
+   */
+  async update(id, data) {
+    const sustitucion = await sustitucionRepo.update(id, data);
+    if (!sustitucion) {
+      const err = new Error(`Sustitución con id=${id} no encontrada`);
+      err.status = 404;
+      throw err;
+    }
+    return sustitucion;
+  }
 }
 
 module.exports = new SustitucionService();

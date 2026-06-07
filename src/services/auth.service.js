@@ -3,32 +3,32 @@ const jwt     = require('jsonwebtoken');
 const config  = require('../config');
 const authRepo = require('../repositories/auth.repository');
  
-const register = async ({ nombre, correo, password, rol }) => {
-  const existe = await authRepo.findByCorreo(correo);
+const register = async ({ nombre, empleado_id, correo, password, rol }) => {
+  const existe = (await authRepo.findByCorreo(correo)) || (await authRepo.findByEmpleadoId(empleado_id));
   if (existe) {
-    const err = new Error('Ya existe una cuenta con ese correo.');
+    const err = new Error('Ya existe una cuenta con ese correo o ID de empleado.');
     err.status = 409;
     throw err;
   }
- 
+
   const hash = await bcrypt.hash(password, 10);
-  const user = await authRepo.create({ nombre, correo, password: hash, rol });
- 
+  const user = await authRepo.create({ nombre, empleado_id, correo, password: hash, rol });
+
   const token = _generarToken(user);
   return { token, user: _publicUser(user) };
 };
- 
-const login = async ({ correo, password }) => {
-  const user = await authRepo.findByCorreo(correo);
- 
+
+const login = async ({ empleado_id, password }) => {
+  const user = await authRepo.findByEmpleadoId(empleado_id);
+
   // Mismo mensaje para usuario no encontrado y contraseña incorrecta
-  // (evita enumerar correos registrados)
+  // (evita enumerar IDs de empleado registrados)
   if (!user || !(await bcrypt.compare(password, user.password))) {
     const err = new Error('Credenciales incorrectas.');
     err.status = 401;
     throw err;
   }
- 
+
   const token = _generarToken(user);
   return { token, user: _publicUser(user) };
 };
@@ -46,19 +46,20 @@ const getMe = async (id) => {
 // ─── Helpers privados ─────────────────────────────────────────────────────────
 function _generarToken(user) {
   return jwt.sign(
-    { id: user.id, correo: user.correo, rol: user.rol },
+    { id: user.id, empleado_id: user.empleado_id, correo: user.correo, rol: user.rol },
     config.jwt.secret,
     { expiresIn: config.jwt.expiresIn }
   );
 }
- 
+
 function _publicUser(user) {
   return {
-    id:         user.id,
-    nombre:     user.nombre,
-    correo:     user.correo,
-    rol:        user.rol,
-    created_at: user.created_at,
+    id:          user.id,
+    nombre:      user.nombre,
+    empleado_id: user.empleado_id,
+    correo:      user.correo,
+    rol:         user.rol,
+    created_at:  user.created_at,
   };
 }
  

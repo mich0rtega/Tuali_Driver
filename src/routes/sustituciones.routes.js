@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const sustitucionService = require('../services/sustitucion.service');
-const { SustitucionCreateSchema } = require('../schemas/sustitucion.schema');
+const { SustitucionCreateSchema, SustitucionUpdateSchema } = require('../schemas/sustitucion.schema');
 const validate = require('../middlewares/validate');
 
 const router = Router();
@@ -40,6 +40,19 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const sustitucion = await sustitucionService.getById(parseInt(req.params.id, 10));
+    res.json(sustitucion);
+  } catch (err) {
+    next(err);
+  }
+});
+
+/**
+ * PUT /api/sustituciones/:id
+ * Actualiza el estado de una sustitución (notificar al cliente, aplicar, rechazar).
+ */
+router.put('/:id', validate(SustitucionUpdateSchema), async (req, res, next) => {
+  try {
+    const sustitucion = await sustitucionService.update(parseInt(req.params.id, 10), req.body);
     res.json(sustitucion);
   } catch (err) {
     next(err);

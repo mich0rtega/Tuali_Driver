@@ -4,7 +4,7 @@ const { QueryTypes } = require('sequelize');
 class DashboardRepository {
   async getResumenRuta(repartidor_id) {
     return sequelize.query(
-      `SELECT estado, total_pedidos, fecha
+      `SELECT id, estado, total_pedidos, fecha
        FROM rutas
        WHERE repartidor_id = :repartidor_id
        AND fecha = CURRENT_DATE`,

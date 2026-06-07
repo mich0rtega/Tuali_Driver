@@ -34,6 +34,11 @@ module.exports = (sequelize) => {
         allowNull:    false,
         defaultValue: DataTypes.NOW,
       },
+      estado: {
+        type:         DataTypes.STRING(20),
+        allowNull:    false,
+        defaultValue: 'Pendiente',
+      },
       deleted_at: {
         type:      DataTypes.DATE,
         allowNull: true,

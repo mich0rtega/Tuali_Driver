@@ -13,6 +13,11 @@ module.exports = (sequelize) => {
         type:      DataTypes.STRING(100),
         allowNull: false,
       },
+      empleado_id: {
+        type:      DataTypes.STRING(50),
+        allowNull: true,
+        unique:    true,
+      },
       correo: {
         type:      DataTypes.STRING(150),
         allowNull: false,

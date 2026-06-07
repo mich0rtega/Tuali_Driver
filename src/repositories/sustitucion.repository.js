@@ -30,6 +30,18 @@ class SustitucionRepository {
   }
 
   /**
+   * Actualiza el estado/aceptación de una sustitución.
+   * @param {number} id
+   * @param {object} data
+   * @returns {Promise<Sustitucion|null>}
+   */
+  async update(id, data) {
+    const sustitucion = await Sustitucion.findByPk(id);
+    if (!sustitucion) return null;
+    return sustitucion.update(data);
+  }
+
+  /**
    * Retorna todas las sustituciones de un pedido.
    * @param {string} id_pedido
    * @returns {Promise<Sustitucion[]>}

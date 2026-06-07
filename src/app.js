@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const path = require('path');
 
 const app = express();
 
@@ -14,6 +15,12 @@ app.use('/api', require('./routes'));
 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// Permite descargar el certificado autofirmado para confiar en él desde
+// dispositivos físicos (necesario en iOS para conexiones HTTPS de prueba).
+app.get('/cert', (req, res) => {
+  res.download(path.join(__dirname, '..', 'certs', 'cert.pem'), 'tuali-dev-cert.pem');
 });
 
 app.use((req, res) => {

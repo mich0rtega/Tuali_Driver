@@ -2,14 +2,17 @@ const { Auth } = require('../models');
  
 const findByCorreo = (correo) =>
   Auth.findOne({ where: { correo } });
- 
+
+const findByEmpleadoId = (empleado_id) =>
+  Auth.findOne({ where: { empleado_id } });
+
 const findById = (id) =>
   Auth.findByPk(id, {
-    attributes: ['id', 'nombre', 'correo', 'rol', 'created_at'],
+    attributes: ['id', 'nombre', 'empleado_id', 'correo', 'rol', 'created_at'],
   });
- 
-const create = ({ nombre, correo, password, rol }) =>
-  Auth.create({ nombre, correo, password, rol });
- 
-module.exports = { findByCorreo, findById, create };
+
+const create = ({ nombre, empleado_id, correo, password, rol }) =>
+  Auth.create({ nombre, empleado_id, correo, password, rol });
+
+module.exports = { findByCorreo, findByEmpleadoId, findById, create };
  
