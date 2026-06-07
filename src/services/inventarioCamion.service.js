@@ -3,13 +3,21 @@ const { Op }               = require('sequelize');
 const notify               = require('../notifications');
 const { EVENTS }           = require('../notifications');
  
+// Solo registros no eliminados
+const _activos = { deleted_at: null };
+ 
 // ─── CRUD ─────────────────────────────────────────────────────────────────────
  
 const listar = () =>
-  InventarioCamion.findAll({ order: [['id', 'ASC']] });
+  InventarioCamion.findAll({
+    where: _activos,
+    order: [['id', 'ASC']],
+  });
  
 const obtener = async (id) => {
-  const item = await InventarioCamion.findByPk(id);
+  const item = await InventarioCamion.findOne({
+    where: { id, ..._activos },
+  });
   if (!item) {
     const err = new Error('Producto no encontrado en el inventario.');
     err.status = 404;
@@ -26,9 +34,10 @@ const actualizar = async (id, data) => {
   return item.update(data);
 };
  
+// Soft delete — marca deleted_at, no borra el registro
 const eliminar = async (id) => {
   const item = await obtener(id);
-  await item.destroy();
+  return item.update({ deleted_at: new Date() });
 };
  
 // ─── Movimientos ──────────────────────────────────────────────────────────────
@@ -72,6 +81,7 @@ const salida = async (id, cantidad) => {
 const stockBajo = () =>
   InventarioCamion.findAll({
     where: {
+      deleted_at: null,
       cantidad_actual: { [Op.lte]: InventarioCamion.sequelize.col('stock_minimo') },
     },
     order: [['cantidad_actual', 'ASC']],

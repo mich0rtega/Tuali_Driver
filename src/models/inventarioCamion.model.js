@@ -1,3 +1,4 @@
+
 const { DataTypes } = require('sequelize');
  
 module.exports = (sequelize) => {
@@ -31,6 +32,10 @@ module.exports = (sequelize) => {
         allowNull:    false,
         defaultValue: 0,
       },
+      deleted_at: {
+        type:      DataTypes.DATE,
+        allowNull: true,
+      },
     },
     {
       tableName:  'inventario_camion',
@@ -40,4 +45,3 @@ module.exports = (sequelize) => {
  
   return InventarioCamion;
 };
- 
