@@ -9,6 +9,7 @@ router.use('/rutas',         require('./ruta.routes'));
 router.use('/ordenes',       require('./orden.routes'));
 router.use('/dashboard',     require('./dashboard.routes'));
 router.use('/incidentes',    require('./incidenteDevolucion.routes'));
+router.use('/clientes',      require('./cliente.routes'));
 
 router.get('/', (req, res) => {
   res.json({ message: 'Tuali Driver API v1.0' });
