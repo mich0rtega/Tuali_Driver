@@ -10,7 +10,7 @@ module.exports = (sequelize) =>
         autoIncrement: true,
       },
       id_pedido: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       sku_original: {

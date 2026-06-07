@@ -1,7 +1,7 @@
 const { z } = require('zod');
 
 const PrediccionIACreateSchema = z.object({
-  id_pedido: z.string().min(1),
+  id_pedido: z.number().int().positive(),
   probabilidad_sustitucion: z.number().min(0).max(1),
   producto_recomendado: z.string().min(1),
   probabilidad_aceptacion: z.number().min(0).max(1),

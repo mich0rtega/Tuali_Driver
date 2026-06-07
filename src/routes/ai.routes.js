@@ -32,7 +32,7 @@ router.get('/recommendations/:sku', async (req, res, next) => {
 router.get('/predict/:id_pedido', async (req, res, next) => {
   try {
     const resultado = await predictionService.predictSubstitution(
-      req.params.id_pedido
+      Number(req.params.id_pedido)
     );
     res.json(resultado);
   } catch (err) {

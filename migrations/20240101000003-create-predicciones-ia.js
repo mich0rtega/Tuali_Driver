@@ -11,7 +11,7 @@ module.exports = {
         allowNull: false,
       },
       id_pedido: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'ordenes', key: 'id_pedido' },
         onUpdate: 'CASCADE',

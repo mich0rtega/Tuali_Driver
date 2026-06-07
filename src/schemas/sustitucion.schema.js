@@ -1,7 +1,7 @@
 const { z } = require('zod');
 
 const SustitucionCreateSchema = z.object({
-  id_pedido: z.string().min(1),
+  id_pedido: z.number().int().positive(),
   sku_original: z.string().min(1),
   producto_original: z.string().min(1),
   sku_sustituto: z.string().min(1),
