@@ -1,5 +1,7 @@
 const { InventarioCamion } = require('../models');
 const { Op }               = require('sequelize');
+const notify               = require('../notifications');
+const { EVENTS }           = require('../notifications');
  
 // ─── CRUD ─────────────────────────────────────────────────────────────────────
  
@@ -47,7 +49,22 @@ const salida = async (id, cantidad) => {
     throw err;
   }
  
-  return item.update({ cantidad_actual: item.cantidad_actual - cantidad });
+  const actualizado = await item.update({
+    cantidad_actual: item.cantidad_actual - cantidad,
+  });
+ 
+  // Emitir notificación si quedó en stock bajo
+  if (actualizado.cantidad_actual <= actualizado.stock_minimo) {
+    notify(EVENTS.STOCK_BAJO, {
+      id:              actualizado.id,
+      sku:             actualizado.sku,
+      nombre_producto: actualizado.nombre_producto,
+      cantidad_actual: actualizado.cantidad_actual,
+      stock_minimo:    actualizado.stock_minimo,
+    });
+  }
+ 
+  return actualizado;
 };
  
 // ─── Alertas ──────────────────────────────────────────────────────────────────
