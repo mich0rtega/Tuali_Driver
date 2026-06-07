@@ -1,13 +1,18 @@
 require('dotenv').config();
-const app = require('./app');
-const { sequelize } = require('./models');
-
+const http             = require('http');
+const app              = require('./app');
+const { initSocket }   = require('./config/socket');
+ 
 const PORT = process.env.PORT || 3000;
-
-(async () => {
-  await sequelize.authenticate();
-  console.log('Base de datos conectada');
-  app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
-  });
-})();
+ 
+// Crear servidor HTTP para que Socket.io pueda usarlo
+const server = http.createServer(app);
+ 
+// Inicializar Socket.io
+initSocket(server);
+ 
+server.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`Ambiente: ${process.env.NODE_ENV || 'development'}`);
+});
+ 
